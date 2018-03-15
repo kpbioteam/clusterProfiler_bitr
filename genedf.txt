@@ -1,0 +1,2 @@
+"SYMBOL" "ENTREZID"
+"1" "GPX3" "2878"
