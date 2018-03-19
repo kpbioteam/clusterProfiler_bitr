@@ -1,1 +1,1 @@
-#This tool is a Biological Id TRanslator
+#This tool is a Biological Id TRanslator (for human genome wide annotation)
