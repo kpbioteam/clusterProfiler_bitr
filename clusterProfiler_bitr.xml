@@ -1,15 +1,28 @@
-<tool id="clusterProfiler_bitr" name="clusterProfiler_bitr" version="0.1.0">
+<tool id="clusterprofiler_bitr" name="Cluster Profiler Bitr" version="0.1.0">
     <description>converting ID types</description>
     <requirements>
         <requirement type="package" version="3.6.0">bioconductor-clusterprofiler</requirement>
         <requirement type="package" version="3.5.0">bioconductor-org.hs.eg.db</requirement>
     </requirements>
-    <command detect_errors="exit_code"><![CDATA[
-        Rscript  ${__tool_directory__}/clusterProfiler_bitr.R "$input1" "$input2" "$input3" "$output1"
+<command detect_errors="exit_code"><![CDATA[
+        Rscript '$clusterprofiler_bitr_script'
     ]]></command>
+    <configfiles>
+        <configfile name="clusterprofiler_bitr_script"><![CDATA[
+require("clusterProfiler", quietly = TRUE)
+require("org.Hs.eg.db", quietly = TRUE)
+
+gene <- c(read.table('$genelist'))
+gene.df = bitr(gene\$V1, fromType='$fromType', toType='$toType', OrgDb="org.Hs.eg.db")
+
+write.table(gene.df,file = '$translation',row.names = FALSE)
+        
+        ]]>
+        </configfile>
+    </configfiles> 
     <inputs>
-        <param type="data" name="input1" format="txt" />
-        <param name="input2" type="select" label="Input Type Gene ID" help="User should provides fromType geneID (translator input type)">
+        <param type="data" name="genelist" format="txt" />
+        <param name="fromType" type="select" label="Input Type Gene ID" help="User should provides fromType geneID (translator input type)">
                         <option value="SYMBOL">SYMBOL</option>
 			 <option value="ENTREZID">ENTREZID</option>
 			 <option value="ENSEMBL">ENSEMBL</option>
@@ -46,7 +59,7 @@
 			<option value="ACCNUM">ACCNUM</option>
  </param>
 
-        <param name="input3" type="select" label="Output Type Gene ID" help="User should provides toType geneID (translator output type)">
+        <param name="toType" type="select" label="Output Type Gene ID" help="User should provides toType geneID (translator output type)">
                         <option value="SYMBOL">SYMBOL</option>
 			<option value="ENTREZID">ENTREZID</option>
 			<option value="ENSEMBL">ENSEMBL</option>
@@ -84,14 +97,14 @@
 </param>
     </inputs>
     <outputs>
-        <data name="output1" format="txt" />
+        <data name="translation" format="txt" />
     </outputs>
     <tests>
         <test>
-            <param name="input1" value="gene.txt"/>
-            <param name="input2" value="SYMBOL"/>
-            <param name="input3" value="ENTREZID"/>
-            <output name="output1" file="genedf.txt"/>
+            <param name="genelist" value="gene.txt"/>
+            <param name="fromType" value="SYMBOL"/>
+            <param name="toType" value="ENTREZID"/>
+            <output name="translation" file="genedf.txt"/>
         </test>
     </tests>
     <help><![CDATA[
