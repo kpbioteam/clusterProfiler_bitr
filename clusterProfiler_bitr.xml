@@ -2,7 +2,7 @@
     <description>converting ID types</description>
     <requirements>
         <requirement type="package" version="3.10.1">bioconductor-clusterprofiler</requirement>
-        <requirement type="package" version="3.5.0">bioconductor-org.hs.eg.db</requirement>
+        <requirement type="package" version="3.7.0">bioconductor-org.hs.eg.db</requirement>
     </requirements>
 <command detect_errors="exit_code"><![CDATA[
         Rscript '$clusterprofiler_bitr_script'
