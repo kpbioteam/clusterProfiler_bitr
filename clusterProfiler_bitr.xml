@@ -97,7 +97,7 @@ write.table(gene.df,file = '$translation',row.names = FALSE)
 </param>
     </inputs>
     <outputs>
-        <data name="translation" format="txt" />
+        <data name="translation" format="txt" label="Table of Translated Gene ID's" />
     </outputs>
     <tests>
         <test>
